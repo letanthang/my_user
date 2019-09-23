@@ -2,6 +2,9 @@ package route
 
 import (
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	"github.com/letanthang/my_framework/config"
+	"github.com/letanthang/my_framework/db/types"
 	"github.com/letanthang/my_framework/handlers"
 )
 
@@ -24,6 +27,13 @@ func Staff(e *echo.Echo) {
 }
 
 func Private(e *echo.Echo) {
-	staffRoute := e.Group("/api/v1/private")
-	staffRoute.PUT("/user", handlers.UpdateAccount)
+
+	jwtConfig := middleware.JWTConfig{
+		Claims:     &types.MyClaims{},
+		SigningKey: []byte(config.Config.Encryption.JWTSecret),
+	}
+	privateRoute := e.Group("/api/v1/private")
+	privateRoute.Use(middleware.JWTWithConfig(jwtConfig))
+	privateRoute.PUT("/user", handlers.UpdateAccount)
+
 }

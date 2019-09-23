@@ -39,9 +39,11 @@ func UpdateAccount(claims *types.MyClaims, req types.AccountUpdateReq) (interfac
 
 	filter := bson.M{"phone": claims.ClientPhone}
 
-	var update map[string]interface{}
+	var data map[string]interface{}
 	bs, _ := json.Marshal(req)
-	json.Unmarshal(bs, &update)
+	json.Unmarshal(bs, &data)
+
+	update := bson.M{"$set": data}
 
 	res, err := Client.Database(dbName).Collection("account").UpdateOne(context.TODO(), filter, update)
 
