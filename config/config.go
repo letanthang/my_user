@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -35,8 +36,12 @@ var Config Schema
 
 func init() {
 	viper.SetConfigName("config") // name of config file (without extension)
-	// viper.AddConfigPath("/etc/appname/") // path to look for the config file in
+
 	viper.AddConfigPath("./config")
+	//read from env
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "__"))
+	viper.AutomaticEnv()
+
 	err := viper.ReadInConfig() // Find and read the config file
 	if err != nil {             // Handle errors reading the config file
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
