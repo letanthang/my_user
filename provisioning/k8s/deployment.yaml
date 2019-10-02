@@ -1,23 +1,28 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-user-dep
+  name: APP_NAME-deploy
+  namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: my-user
+      app: APP_NAME
   template:
     metadata:
       labels:
-        app: my-user
+        app: APP_NAME
     spec:
       containers:
-        - name: my-fw-cont
-          image: letanthang/my-user
+        - name: APP_NAME
+          image: letanthang/APP_NAME
           ports:
             - containerPort: 80
               name: web
+          envFrom:
+            - configMapRef:
+                name: thang-staging-config
           resources:
             requests:
               memory: "50Mi"
@@ -25,3 +30,5 @@ spec:
             limits:
               memory: "75Mi"
               cpu: "75m"
+---
+

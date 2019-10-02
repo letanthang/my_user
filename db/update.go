@@ -43,6 +43,11 @@ func UpdateAccount(claims *types.MyClaims, req types.AccountUpdateReq) (interfac
 	bs, _ := json.Marshal(req)
 	json.Unmarshal(bs, &data)
 
+	//md5 password
+	if p, ok := data["password"]; ok == true {
+		data["password"] = utils.GetMD5(p.(string))
+	}
+
 	update := bson.M{"$set": data}
 
 	res, err := Client.Database(dbName).Collection("account").UpdateOne(context.TODO(), filter, update)
