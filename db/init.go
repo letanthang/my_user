@@ -18,11 +18,11 @@ const (
 var Client *mongo.Client
 
 func init() {
-	// c, _ := mongo.NewClient(options.Client().SetAuth(options.Credential{}))
-
-	var uri string
-	uri = "mongodb://" + config.Config.MongoDB.Username + ":" + config.Config.MongoDB.Password + "@" + config.Config.MongoDB.Host + ":27017"
-	fmt.Println(uri)
+	uri := config.Config.Mongo.URI
+	if config.Config.Mongo.URI == "" {
+		uri = fmt.Sprintf("mongodb://%s:%s@%s:27017", config.Config.Mongo.User, config.Config.Mongo.Password, config.Config.Mongo.Host)
+	}
+	fmt.Println("uri1", uri)
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	// client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://mongoadmin:secret@localhost:27017"))
 	if err != nil {

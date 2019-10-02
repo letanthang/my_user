@@ -16,10 +16,11 @@ type Schema struct {
 		Debug    bool
 	} `mapstructure:"go_postgres_database"`
 
-	MongoDB struct {
-		Username string `mapstructure:"user"`
-		Password string `mapstructure:"password"`
+	Mongo struct {
+		URI      string `mapstructure:"uri"`
 		Host     string `mapstructure:"host"`
+		User     string `mapstructure:"user"`
+		Password string `mapstructure:"password"`
 	} `mapstructure:"mongo"`
 
 	Paging struct {

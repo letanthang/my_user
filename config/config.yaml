@@ -6,9 +6,10 @@ go_postgres_database:
   debug: true
 
 mongo:
+  uri:
   host: localhost
   user: mongoadmin
-  password: "secret"
+  password: secret
 
 paging:
   limit: 100
