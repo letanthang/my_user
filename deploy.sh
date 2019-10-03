@@ -1,5 +1,5 @@
 APP_NAME=$(basename $PWD)
-export APP_NAME=$(echo $APP_NAME|sed -e 's/_/-/g'|cut -c1-5)
+export APP_NAME=$(echo $APP_NAME|sed -e 's/_/-/g'|cut -c1-7)
 echo $APP_NAME
 function build() {
   # registry_login
